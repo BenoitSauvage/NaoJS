@@ -4137,8 +4137,7 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
 }
 
 .logo-nao {
-    width:100%;
-    height:auto;
+    height:100px;
 }
 .lock-wrapper .locked {
     margin-bottom:20px;
