@@ -3,35 +3,48 @@ var app     = express();
 var path    = require('path');
 var server  = require('http').Server(app);
 var io      = require('socket.io')(server);
+var fs      = require('fs');
 
 app.use(express.static('public'));
 
+conf = loadJSONfile("conf.json","utf8");
+
 app.get('/page/:id', function(req, res) {
-	url='';
-	switch(req.params.id) {
-  	case '1':
-  		url='puydufou.html';
-  		break;
-		case '2':
-  		url='planetesauvage.html';
-  		break;
-		default:
-			console.log('err');
-			url='no';
-			break;
-  }
+    url='';
+    conf.places.forEach(function(obj){
+        if(obj.id == req.params.id){
+            url = obj.url;
+        }
+    });
   io.emit('reload', {url:url});
   res.send();
 });
 
-app.get('/:page', function(req, res) {
-	res.sendFile(path.join(__dirname + '/public/' + req.params.page + '.html'));
-});
-
-app.get('/index',function(req, res) {
+app.get('/',function(req, res) {
 	res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-server.listen(3000);
+app.get('/:page', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/' + req.params.page + '.html'));
+});
 
-console.log("Running at port 3000");
+server.listen(80);
+
+console.log("Running at port 80");
+
+function loadJSONfile (filename, encoding) {
+    try {
+        // default encoding is utf8
+        if (typeof (encoding) == 'undefined') encoding = 'utf8';
+
+        // read file synchroneously
+        var contents = fs.readFileSync(filename, encoding);
+
+        // parse contents as JSON
+        return JSON.parse(contents);
+
+    } catch (err) {
+        // an error occurred
+        throw err;
+    }
+}

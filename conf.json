@@ -1,0 +1,20 @@
+{
+  "places" : [
+    {
+      "url":"puydufou.html",
+      "id":130
+    },
+    {
+      "url":"planetesauvage.html",
+      "id":187
+    },
+    {
+      "url":"valleedessinges.html",
+      "id":170
+    },
+    {
+      "url":"zoodelafleche.html",
+      "id":68
+    }
+  ]
+}
